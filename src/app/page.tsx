@@ -1373,6 +1373,20 @@ function AutomationSection() {
 
 // ─── Portal Dashboard (formerly Admin) ──────────────────────────────
 function PortalSection() {
+  type ProductForm = {
+    id?: string;
+    name: string;
+    brand: string;
+    category: string;
+    processor: string;
+    ram: string;
+    storage: string;
+    display: string;
+    price: string;
+    condition: string;
+    features: string;
+    offer: string;
+  };
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("products");
   const [dbProducts, setDbProducts] = useState<Array<{
@@ -1388,7 +1402,7 @@ function PortalSection() {
     id: string; name: string; email: string; phone: string; message: string;
     source: string; status: string; createdAt: string;
   }>>([]);
-  const [editProduct, setEditProduct] = useState<Record<string, string> | null>(null);
+  const [editProduct, setEditProduct] = useState<ProductForm | null>(null);
   const [editPost, setEditPost] = useState<Record<string, string> | null>(null);
 
   const loadData = async () => {
@@ -1513,7 +1527,24 @@ function PortalSection() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Button size="sm" variant="ghost" onClick={() => setEditProduct({ ...product, price: String(product.price) })}><Icons.Edit /></Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setEditProduct({
+                            id: product.id,
+                            name: product.name,
+                            brand: product.brand,
+                            category: product.category,
+                            processor: product.processor,
+                            ram: product.ram,
+                            storage: product.storage,
+                            display: product.display,
+                            price: String(product.price),
+                            condition: product.condition,
+                            features: product.features,
+                            offer: product.offer,
+                          })}
+                        ><Icons.Edit /></Button>
                         <Button size="sm" variant="ghost" className="text-red-500" onClick={() => deleteProduct(product.id)}><Icons.Trash /></Button>
                       </div>
                     </div>
